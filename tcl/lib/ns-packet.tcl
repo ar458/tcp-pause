@@ -173,6 +173,7 @@ foreach prot {
 	Encap 	# common/encap.cc
         IPinIP 	# IP encapsulation 
 	HDLC 	# High Level Data Link Control
+	PAUSE 	# pause a link
 } {
 	add-packet-header $prot
 }

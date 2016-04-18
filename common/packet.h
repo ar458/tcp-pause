@@ -183,7 +183,8 @@ static const packet_t PT_BLTRACE = 60;
 static const packet_t PT_AOMDV = 61;
 
         // insert new packet types here
-static packet_t       PT_NTYPE = 62; // This MUST be the LAST one
+static const packet_t PT_PAUSE = 62;
+static packet_t       PT_NTYPE = 63; // This MUST be the LAST one
 
 enum packetClass
 {

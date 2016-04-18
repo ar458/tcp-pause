@@ -64,25 +64,26 @@ DEFINE	= -DTCP_DELAY_BIND_ALL -DNO_TK -DTCLCL_CLASSINSTVAR  -DNDEBUG -DLINUX_TCP
 INCLUDES = \
 	-I.  \
 	-I. \
-	-I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/tclcl-1.19 -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/otcl-1.13 -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/usr/include/pcap \
+	-I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/tclcl-1.19 -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/otcl -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/include -I/usr/include/pcap \
 	-I./tcp -I./sctp -I./common -I./link -I./queue \
 	-I./adc -I./apps -I./mac -I./mobile -I./trace \
 	-I./routing -I./tools -I./classifier -I./mcast \
 	-I./diffusion3/lib/main -I./diffusion3/lib \
 	-I./diffusion3/lib/nr -I./diffusion3/ns \
 	-I./diffusion3/filter_core -I./asim/ -I./qs \
-	-I./diffserv -I./satellite \
+	-I./diffserv -I./satellite -I./pause \
 	-I./wpan
 
 
 LIB	= \
-	-L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/tclcl-1.19 -ltclcl -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/otcl-1.13 -lotcl -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/lib -ltk8.4 -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/lib -ltcl8.4 \
+	-L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/tclcl-1.19 -ltclcl -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/otcl -lotcl -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/lib -ltk8.4 -L/home/anurag/test/pfabric_reproduce_test/ns-allinone-2.34/lib -ltcl8.4 \
 	-lXext -lX11 \
 	 -lnsl -ldl \
 	-lm -lm 
 #	-L${exec_prefix}/lib \
 
 CFLAGS	+= $(CCOPT) $(DEFINE) 
+CXXFLAGS = -std=c++11
 
 # Explicitly define compilation rules since SunOS 4's make doesn't like gcc.
 # Also, gcc does not remove the .o before forking 'as', which can be a
@@ -91,7 +92,7 @@ CFLAGS	+= $(CCOPT) $(DEFINE)
 
 .cc.o:
 	@rm -f $@
-	$(CPP) -c $(CFLAGS) $(INCLUDES) -o $@ $*.cc
+	$(CPP) -c $(CFLAGS) $(CXXFLAGS) $(INCLUDES) -o $@ $*.cc
 
 .c.o:
 	@rm -f $@
@@ -312,6 +313,7 @@ OBJ_CC = \
 	pushback/logging-data-struct.o \
 	pushback/rate-estimator.o \
 	pushback/pushback-queue.o pushback/pushback.o \
+	pause/pause_header.o \
 	common/parentnode.o trace/basetrace.o \
 	common/simulator.o asim/asim.o \
 	common/scheduler-map.o common/splay-scheduler.o \
